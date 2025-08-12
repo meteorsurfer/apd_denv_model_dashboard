@@ -6,7 +6,7 @@ import streamlit as st
 
 st.set_page_config(page_title="APD | Exploratory Data Analysis", page_icon="input/logo.svg", layout="wide", initial_sidebar_state="auto")
 clean_sb()
-nav_menu("/app")
+nav_menu("/")
 
 display_headline("Exploratory Analysis of Dengue Cases Across Philippine Regions (2016–2023)")  
 

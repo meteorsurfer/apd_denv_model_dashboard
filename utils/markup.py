@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
 from .wrangling import enso_status_decoder
+import requests
 
 UTC_NOW = datetime.now(tz=timezone.utc)
 
@@ -306,3 +307,118 @@ def region_month_cases_density(df):
     fig.update_yaxes(type="category")
     fig.update_xaxes(type="category")
     st.plotly_chart(fig, theme="streamlit", use_container_width=True, key="density")
+
+def display_sample_outbreak_news(path):
+
+    with st.expander("2019 Dengue Outbreak: Calabarzon Case Study", expanded=True):
+        news = path + "philstar.png"
+        news_1 = path + "outbreaks.png"
+        st.image(image=news, caption="Dengue outbreak declared in Cavite (Source: Philippine Daily Inquirer)")
+        st.image(image=news_1, caption="Dasmariñas posted the highest number of cases among cities in the region.")
+    
+    with st.expander("Show Historical Weather Data For Dengue Hotspots in April 2019", expanded=True):
+
+        st.markdown("_Since the model is designed to forecast outbreak risk three months ahead, the weather data shown reflects conditions three months prior the outbreak declaration._")
+
+        st.dataframe({
+            "📍Location": ["Dasmarinas City, Cavite", "Calamba City, Laguna", "Lipa City, Batangas"],
+            "📅Month": ["April", "April", "April"],
+            "🌧️Rain (Total)": [35.64, 39.06, 39.06],
+            "💧Humidity (Mean)": [64.94, 68.75, 68.75],
+            "🌡️Temp. (Mean)": [30.08, 28.68, 28.68],
+            "🌾ENSO Phase": ["Weak El Niño", "Weak El Niño", "Weak El Niño"]
+        },hide_index=True)
+
+        references = dedent("""
+        <small><em>
+        <strong>Data Source:</strong><br>
+        The data was obtained from <a href="https://power.larc.nasa.gov/data-access-viewer/" target="_blank">NASA Langley Research Center's Prediction Of Worldwide Energy Resources (POWER)</a> project, funded through the NASA Earth Science Division.<br>
+        Version: Monthly/Annual 2.x.x<br>
+        Date Accessed: August 2025
+        </em></small>
+        """)
+
+        st.markdown(references, unsafe_allow_html=True)
+
+        #https://www.abs-cbn.com/news/health-science/2025/2/15/quezon-city-dengue-outbreak-10-deaths-over-1-700-cases-in-2-months-1703
+        #recent outbreak
+
+    return
+
+def predict_dengue_risk_3_months():
+    
+    MODEL_API_URL = "https://my-dengue-ml.onrender.com/predict"
+
+    months = {
+        "January": 1,
+        "February": 2,
+        "March": 3,
+        "April": 4,
+        "May": 5,
+        "June": 6,
+        "July": 7,
+        "August": 8,
+        "September": 9,
+        "October": 10,
+        "November": 11,
+        "December": 12
+    }
+
+
+    regions = {
+        'Cordillera Administrative Region': 'CAR',
+        'Caraga Region': 'CARAGA',
+        'Region 6': '6',
+        'Region 5': '5',
+        'Region 3': '3',
+        'Bangsamoro Autonomous Region in Muslim Mindanao': 'BARMM',
+        'Region 2': '2',
+        'Region 4A': '4A',
+        'Region 8': '8',
+        'Region 7': '7',
+        'Region 10': '10',
+        'National Capital Region': 'NCR',
+        'Region 9': '9',
+        'Region 12': '12',
+        'Region 1': '1',
+        'Region 11': '11',
+        'Region 4B': '4B'
+    }
+
+    ensos = {
+        "Neutral": 0,
+        "Weak La Niña": 1,
+        "Moderate La Niña": 2,
+        "Strong La Niña": 3,
+        "Very Strong La Niña": 4,
+        "Weak El Niño": 5,
+        "Moderate El Niño": 6,
+        "Strong El Niño": 7,
+        "Very Strong El Niño": 8
+    }
+
+    payload = {
+        "currentMonth": months[st.selectbox("Current Month", list(months.keys()))],
+        "region": regions[st.selectbox("Region", list(regions.keys()))],
+        "currentEnsoStatus": ensos[st.selectbox("Current ENSO Status", list(ensos.keys()))],
+        "currentMonthlyTemperature": st.number_input("Current Mean Monthly Temperature"),
+        "currentMonthlyRelativeHumidity": st.number_input("Current Mean Monthly Relative Humidity"),
+        "currentMonthlyRainfall": st.number_input("Current Accumulated Monthly Rainfall")
+    }
+
+    if st.button("Predict"):
+        response = requests.post(MODEL_API_URL, json=payload)
+ 
+        if response.status_code == 200:
+            try:
+                result = response.json()
+                st.write(result)
+            except requests.exceptions.JSONDecodeError:
+                st.error("Response was not valid JSON.")
+                # st.write(response.text)
+        else:
+            st.error(f"API request failed with status code {response.status_code}")
+            # st.write(response.text)
+
+
+    return

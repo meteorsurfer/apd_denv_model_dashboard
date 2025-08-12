@@ -8,8 +8,8 @@ def clean_sb():
 
 def nav_menu(current_page):
     pages = {
-        "Exploratory Data Analysis": "/app",
-        "ML Model API Testing": "/api_testing",
+        "Exploratory Data Analysis": "/",
+        "Machine Learning Model Testing": "/api_testing",
     }
     if current_page and current_page in pages.values():
         current_page_pair = next((k, v) for k, v in pages.items() if v == current_page)
