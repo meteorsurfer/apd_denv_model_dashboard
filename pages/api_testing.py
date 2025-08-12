@@ -18,12 +18,38 @@ with col1:
 
 with st.expander("End-to-End ML Lifecycle Tech Stack"):
     st.markdown("""
-    **🧠 Modeling Framework:** Microsoft LightGBM (optimized for imbalanced WHO-backed outbreak levels)  
-    **📦 Language & IDEs:** `Python`, `Jupyter Notebook`, VS Code  
-    **🌐 Data Gathering & Preparation:** `pandas`, `GeoPandas`, `requests`, `concurrent.futures`, `QGIS` 
-    **📈 Exploratory Data Analysis:** `matplotlib`, `seaborn`, `pandas`, `Streamlit`  
-    **🔍 Modeling & Optimization:** `scikit-learn`, `NumPy`, `LightGBM`, `XGBoost`, `CatBoost`, `Optuna`  
-    **🚀 Deployment & Version Control:** `Flask`, `Streamlit`, `Git`, `GitHub`  
+        <div style="font-family: 'Segoe UI', sans-serif; line-height: 1.6; font-size: 15px;">
+        <h3>🧠 Modeling Framework</h3>
+        <p><strong>Microsoft LightGBM</strong> (optimized for imbalanced WHO-backed outbreak thresholding)</p>
+
+        <h3>📦 Language & IDEs</h3>
+        <ul>
+            <li><code>Python</code></li>
+            <li><code>Jupyter Notebook</code></li>
+            <li><code>VS Code</code></li>
+        </ul>
+
+        <h3>🌐 Data Gathering & Preparation</h3>
+        <ul>
+            <li><code>pandas</code>, <code>GeoPandas</code>, <code>requests</code>, <code>concurrent.futures</code></li>
+            <li><code>QGIS</code></li>
+        </ul>
+
+        <h3>📊 Exploratory Data Analysis</h3>
+        <ul>
+            <li><code>matplotlib</code>, <code>seaborn</code>, <code>pandas</code>, <code>Streamlit</code></li>
+        </ul>
+
+        <h3>🔍 Modeling & Optimization</h3>
+        <ul>
+            <li><code>scikit-learn</code>, <code>NumPy</code>, <code>LightGBM</code>, <code>XGBoost</code>, <code>CatBoost</code>, <code>Optuna</code></li>
+        </ul>
+
+        <h3>🚀 Deployment & Version Control</h3>
+        <ul>
+            <li><code>Flask</code>, <code>Streamlit</code>, <code>Git</code>, <code>GitHub</code></li>
+        </ul>
+        </div>
     """, unsafe_allow_html=True)
 
 display_footer()
