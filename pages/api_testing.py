@@ -20,7 +20,7 @@ with st.expander("End-to-End ML Lifecycle Tech Stack"):
     st.markdown("""
     **🧠 Modeling Framework:** Microsoft LightGBM (optimized for imbalanced WHO-backed outbreak levels)  
     **📦 Language & IDEs:** `Python`, `Jupyter Notebook`, VS Code  
-    **🌐 Data Gathering & Preparation:** `pandas`, `GeoPandas`, `requests`, `concurrent.futures`  
+    **🌐 Data Gathering & Preparation:** `pandas`, `GeoPandas`, `requests`, `concurrent.futures`, `QGIS` 
     **📈 Exploratory Data Analysis:** `matplotlib`, `seaborn`, `pandas`, `Streamlit`  
     **🔍 Modeling & Optimization:** `scikit-learn`, `NumPy`, `LightGBM`, `XGBoost`, `CatBoost`, `Optuna`  
     **🚀 Deployment & Version Control:** `Flask`, `Streamlit`, `Git`, `GitHub`  
